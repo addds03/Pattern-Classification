@@ -10,7 +10,7 @@
 4. High multicolinearity in the data
 5. No Missing Data
 
-## Data Exploration Highlights (Descriptors_Training)
+## Data Exploration Highlights (Descriptors_Calibration)
 
 1. Outliers present 
 2. Dataset is highly skewed.
