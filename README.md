@@ -28,3 +28,15 @@
 4. Prep (--||--) without outliers - ***Precision: [0.95104895 0.08032129] Recall: [0.94512341 0.0896861 ]***
 
 ***P.S - Removing outliers reduces the accurace if the model, Class imbalance has an impact on model***
+
+## Model
+
+1. StandardScaler()
+2. SMOTE(sampling_strategy=0.1)
+3. RandomUnderSampler(sampling_strategy=0.5)
+4. GradientBoostingClassifier(learning_rate=0.05, n_estimators=80, max_depth=11, max_features=17, min_samples_split=800, min_samples_leaf=50,subsample=0.75, random_state=10)
+
+Evaluation:- 
+***F1-score: 0.14705882352941177
+Precision: 0.13595166163141995
+Recall: 0.1601423487544484***
