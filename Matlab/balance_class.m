@@ -16,6 +16,7 @@ end
 CP = CP-1;
 CN = CN -1;
 
+% Random OverSampling
 for i = 1:(CN-CP)
     rnd = randi(CP);
     Pos(CP+i,:) = Pos(rnd,:);

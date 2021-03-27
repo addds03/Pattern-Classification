@@ -35,17 +35,29 @@ clear ('Vlabels');
 
 %% Balance Classes and Preprocess
 
-F_AND_L = Preprocess(F_AND_L,0);
+F_AND_L = Preprocess(F_AND_L);
 F_AND_L = balance_class(F_AND_L);
-V_set = Preprocess(V_set,1);
+V_set = Preprocess(V_set);
 
-[F_AND_L, newPOS] = featureselection(F_AND_L);
-V_set = featureTrim(V_set, newPOS);
+%% Select Features
+[F_AND_L, V_set] = featureselection(F_AND_L, V_set);
 
+%% Train Model
 Model = training(F_AND_L);
 
-Class_labels = predict(Model, V_set(:, 1:end-1));
+%% Predict and Evaluate Model
+[Class_labels,scores] = predict(Model, V_set(:, 1:end-1));
 
-pre = evaluate(V_set(:,end), Class_labels);
+[pre, confusion] = evaluate(V_set(:,end), Class_labels);
 
+[X,Y,T] = perfcurve(V_set(:,end), scores(:,2), 1, 'XCrit', 'prec');
+figure;
+plot(Y,X);
+hold on 
+xlabel('Recall');
+ylabel('Precision');
+title('Precision-Recall Curve of Gradient Boosted Tree Model on Calibration Data');
+grid on
+hold off
 
+[UB,LB] = bootstrap2predict(V_set, Model);
