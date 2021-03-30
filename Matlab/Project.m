@@ -35,17 +35,18 @@ clear ('Vlabels');
 
 %% Balance Classes and Preprocess
 
-F_AND_L = Preprocess(F_AND_L);
+F_AND_L = Preprocess(F_AND_L,0);
 F_AND_L = balance_class(F_AND_L);
-V_set = Preprocess(V_set);
+V_set = Preprocess(V_set,1);
 
 %% Select Features
 [F_AND_L, V_set] = featureselection(F_AND_L, V_set);
 
 %% Train Model
-Model = training(F_AND_L);
+% Model = training(F_AND_L);
 
 %% Predict and Evaluate Model
+Model.ScoreTransform = 'doublelogit';
 [Class_labels,scores] = predict(Model, V_set(:, 1:end-1));
 
 [pre, confusion] = evaluate(V_set(:,end), Class_labels);
@@ -60,4 +61,4 @@ title('Precision-Recall Curve of Gradient Boosted Tree Model on Calibration Data
 grid on
 hold off
 
-[UB,LB] = bootstrap2predict(V_set, Model);
+ [UB,LB] = bootstrap2predict(V_set, Model);

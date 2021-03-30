@@ -1,4 +1,4 @@
-function s= Preprocess(feats)
+function s= Preprocess(feats,testing)
 [~, columns] = size(feats);
 Skew = skewness(feats(:,1:28));
 mu = mean(feats(:,1:28));
@@ -20,7 +20,7 @@ end
 
 %% Remove Outliers
 labels = feats(:,29);
-
+if testing ==0
 [feats TF] = rmoutliers(feats(:,1:28), 'mean');
 
 count = 1;
@@ -29,6 +29,7 @@ for j = 1:length(TF)
         feats(count,29) = labels(j,1);
         count = count+1;
     end
+end
 end
 
 s=feats;
